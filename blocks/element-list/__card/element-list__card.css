@@ -1,0 +1,9 @@
+.element-list__card {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  overflow: hidden;
+  background-color: #fff;
+  border-radius: 10px;
+  height: 361px;
+}
