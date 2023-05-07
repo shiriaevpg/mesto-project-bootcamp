@@ -8,5 +8,6 @@
 + Поп-ап (без функциональности)
 ## Используемые технологии
 + HTML
++ CSS
 ## Github Pages
 [Ссылка на сайт](https://shiriaevpg.github.io/mesto-project-bootcamp/)
