@@ -2,7 +2,7 @@
   max-width: 358px;
   width: 100%;
   border: none;
-  font-family: 'Inter';
+
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
@@ -15,17 +15,18 @@
   padding-top: 23px;
   margin-top: 0px;
 }
-@media screen and (max-width: 600px) {
-    .popup__input {
-        max-width: 238px;
-        width: 100%;
-        border: none;
-        line-height: 13px;
-        margin-left: 20px;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-        height: 27px;
-        padding-bottom: 7px;
-        padding-top: 23px;
-        margin-top: 0px;
-      }
+
+@media screen and (max-width: 900px) {
+  .popup__input {
+    max-width: 238px;
+    width: 100%;
+    border: none;
+    line-height: 13px;
+    margin-left: 20px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    height: 24px;
+    padding-bottom: 6px;
+    padding-top: 25px;
+    margin-top: 0px;
+  }
 }

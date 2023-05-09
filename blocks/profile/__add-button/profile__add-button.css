@@ -2,13 +2,15 @@
   background-image: url("../../../images/add-button.svg");
   height: 50px;
   width: 150px;
-  background-color: black;
-  border: 1px solid #fff;
+  background-color: transparent;
+  border: 2px solid #fff;
   background-position: center;
   background-repeat: no-repeat;
+  border-radius: 2px;
 }
-@media screen and (max-width: 600px) {
+@media screen and (max-width:  900px) {
     .profile__add-button {
         width: 282px;
+        background-size: 15px 15px;
       }
 }

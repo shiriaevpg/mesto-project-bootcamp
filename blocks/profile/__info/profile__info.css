@@ -5,12 +5,12 @@
   justify-items: start;
   row-gap: 7px;
   column-gap: 12px;
-  /* padding-left: 30px; */
   padding-top: 2px;
 }
-@media screen and (max-width: 600px) {
+@media screen and (max-width:  900px) {
     .profile__info {
         grid-template-columns: 213px 1fr;
         padding-bottom: 33px;
+        padding-top: 10px;
       }
 }

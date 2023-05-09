@@ -10,7 +10,7 @@
   background-color: rgba(0, 0, 0, .5);
   justify-content: center
 }
-@media screen and (max-width: 600px) {
+@media screen and (max-width:  900px) {
     .popup {
         padding: 0;
         margin-top: 115px;

@@ -1,7 +1,6 @@
 .profile__quote {
   max-width: 300px;
   width: 100%;
-  font-family: 'Inter', sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 18px;
@@ -12,11 +11,8 @@
   grid-row: 2;
   text-overflow: ellipsis;
 }
-@media screen and (max-width: 600px) {
+@media screen and (max-width:  900px) {
     .profile__quote {
-        font-family: 'Inter';
-        font-style: normal;
-        font-weight: 400;
         font-size: 14px;
         line-height: 17px;
         text-align: center;
