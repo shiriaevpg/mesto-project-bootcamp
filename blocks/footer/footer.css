@@ -3,10 +3,11 @@
   color: #545454;
   max-width: 880px;
   width: 100%;
-  /* padding-left: 750px; */
+  padding-bottom: 60px;
 }
 @media screen and (max-width:  900px) {
   .footer {
     padding-top: 33px;
+    padding-bottom: 36px;
   }
 }
