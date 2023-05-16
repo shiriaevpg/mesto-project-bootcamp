@@ -1,5 +1,6 @@
 .element-list__card {
   display: flex;
+  position: relative;
   justify-content: space-between;
   flex-wrap: wrap;
   overflow: hidden;
