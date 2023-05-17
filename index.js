@@ -14,7 +14,7 @@ const imagePopup = document.querySelector('.image-popup')
 const closeImagePopup = imagePopup.querySelector('.popup__close-button');
 const profileName =  document.querySelector('.profile__name');
 const profileJob = document.querySelector('.profile__quote');
-
+const closeButtons = document.querySelectorAll('.popup__close-button');
 const cardList = document.querySelector('.element-list');
 const cardTemplate = document.getElementById('element-list__card-template');
 const initialCards = [
@@ -46,26 +46,21 @@ const initialCards = [
 
 editButton.addEventListener('click', function(){
   openPopup(profilePopup);
-});
-
-closeProfilePopup.addEventListener('click', function(){
-  closePopup(profilePopup);
-});
-
-closeAddPopup.addEventListener('click', function(){
-  closePopup(addPopup);
+  nameInput.value = profileName.textContent;
+  jobInput.value = profileJob.textContent;
 });
 
 addButton.addEventListener('click',function(){
   openPopup(addPopup);
 });
-closeImagePopup.addEventListener('click',function(){
-  closePopup(imagePopup);
+
+closeButtons.forEach((button) => {
+  const popup = button.closest('.popup');
+  console.log(popup);
+  button.addEventListener('click', () => closePopup(popup));
 });
 function handleFormSubmit(evt) {
-    evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
-                                                // Так мы можем определить свою логику отправки.
-                                                // О том, как это делать, расскажем позже.
+    evt.preventDefault();
     profileName.textContent = nameInput.value;
     profileJob.textContent = jobInput.value;
     evt.target.reset();
@@ -74,9 +69,6 @@ function handleFormSubmit(evt) {
 
 function handleAddSubmit(evt) {
   evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
-                                              // Так мы можем определить свою логику отправки.
-                                              // О том, как это делать, расскажем позже.
-  
   renderCard(placeInput.value,linkInput.value);
   evt.target.reset();
   closePopup(addPopup);
@@ -90,21 +82,16 @@ function closePopup(popup){
   popup.classList.remove('popup_opened');
 }
 
-function renderCard(name, url){
-  const newCard =
-        cardTemplate.content.querySelector('.element-list__card').cloneNode(true);
-  newCard.querySelector('.element-list__image').src = url;
-  newCard.querySelector('.element-list__image').alt = name;
-  newCard.querySelector('.element-list__text').textContent = name;
-  cardList.append(newCard);
-  const newLike = newCard.querySelector('.element-list__like-button')
-  const newDelete = newCard.querySelector('.element-list__trash-button');
-  const cardImage = newCard.querySelector('.element-list__image');
+function addCardListeners(card){
+  const newLike = card.querySelector('.element-list__like-button')
+  const newDelete = card.querySelector('.element-list__trash-button');
+  const cardImage = card.querySelector('.element-list__image');
+  console.log(newDelete);
   newLike.addEventListener('click',function(){
     newLike.classList.toggle('element-list__like-button_liked');
   });
   newDelete.addEventListener('click',function(){
-    newCard.remove();
+    card.remove();
   });
   cardImage.addEventListener('click',function(){
     openPopup(imagePopup);
@@ -113,6 +100,17 @@ function renderCard(name, url){
     console.log(imagePopup.querySelector('.popup__text'));
     console.log(imagePopup.querySelector('.popup__text').value);
   });
+}
+function addCard(newCard){cardList.prepend(newCard);}  
+
+function renderCard(name, url){
+  const newCard =
+        cardTemplate.content.querySelector('.element-list__card').cloneNode(true);
+  newCard.querySelector('.element-list__image').src = url;
+  newCard.querySelector('.element-list__image').alt = name;
+  newCard.querySelector('.element-list__text').textContent = name;
+  addCard(newCard);
+  addCardListeners(newCard);
 }
 
 formElement.addEventListener('submit', handleFormSubmit);
