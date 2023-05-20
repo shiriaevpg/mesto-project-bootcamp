@@ -1,0 +1,15 @@
+.button {
+  cursor: pointer;
+  transition: opacity 0.4s linear;
+}
+.button:disabled {
+  background-color: transparent;
+  border: 1px solid rgba(0,0,0,0.15);
+  color: rgba(0,0,0,0.15);
+}
+.button:hover {
+  opacity: 0.5;
+}
+.button:hover:disabled{
+  opacity: 1;
+}

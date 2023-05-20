@@ -1,17 +1,32 @@
 {
   "dependencies": {
+    "core-js": "^3.30.2",
     "swiper": "^9.2.4"
   },
   "devDependencies": {
-    "css-to-bem-file-structure": "^0.0.5"
+    "@babel/core": "^7.21.8",
+    "@babel/preset-env": "^7.21.5",
+    "autoprefixer": "^10.4.14",
+    "babel-loader": "^9.1.2",
+    "clean-webpack-plugin": "^4.0.0",
+    "css-loader": "^6.7.3",
+    "css-to-bem-file-structure": "^0.0.5",
+    "cssnano": "^6.0.1",
+    "html-webpack-plugin": "^5.5.1",
+    "mini-css-extract-plugin": "^2.7.5",
+    "postcss-loader": "^7.3.0",
+    "webpack": "^5.83.1",
+    "webpack-cli": "^5.1.1",
+    "webpack-dev-server": "^4.15.0"
   },
-  "name": "4sprint",
-  "version": "1.0.0",
+  "name": "yandex.practicum",
+  "version": "0.0.1",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "rm -rf dist && webpack",
+    "dev": "webpack serve"
   },
-  "author": "",
+  "author": "Pavel Shiriaev",
   "license": "ISC",
-  "description": ""
+  "description": "Вёрстка интерактивной страницы, куда можно добавлять фотографии, удалять их и ставить лайки. ## Функциональность На данный момент присутсвуют: + Базовая вёрстка сайта + Поп-апы добавления картинок, изменения профиля (всё происходит на стороне фронтенда) ## Используемые технологии + HTML + CSS + Javascript ## Github Pages [Ссылка на сайт](https://shiriaevpg.github.io/mesto-project-bootcamp/)"
 }

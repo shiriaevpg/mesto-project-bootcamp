@@ -6,17 +6,16 @@
     <meta name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="pages/index.css">
     <title>Mesto</title>
 </head>
 
 <body class="page">
     <header class="header">
-        <img src="images/Vector.svg" class="header__logo" alt="Mesto">
+        <img src="<%=require('./images/Vector.svg')%>" class="header__logo" alt="Mesto">
     </header>
     <main class="main">
         <section class="profile">
-            <img src="images/avatar.jpg" alt="аватар" class="profile__avatar">
+            <img src="<%=require('./images/avatar.jpg')%>" alt="аватар" class="profile__avatar">
             <div class="profile__info">
                 <h1 class="profile__name no-text-overflow">Жак-Ив Кусто </h1>
                 <button class="profile__edit-button button" type="button" aria-label="Изменить профиль"></button>
@@ -34,14 +33,19 @@
     </footer>
 
     <div class="popup rename-popup">
+        <div class="popup__overlay"></div>
         <div class="popup__container">
             <button class="popup__close-button button" type="button" aria-label="Закрыть"></button>
             <h2 class="popup__title">
                 Редактировать профиль
             </h2>
-            <form class="form">
-                <input class="popup__input" value="Жак-Ив Кусто" name="username" type="text">
-                <input class="popup__input" value="Исследователь океана" name="userjob" text="text">
+            <form class="form" novalidate>
+                <input class="popup__input" value="" name="username" type="text" id="username-input" placeholder="Имя"
+                    minlength="2" maxlength="40" required>
+                <span class="popup__input-error username-input-error"></span>
+                <input class="popup__input" value="" name="userjob" text="text" id="userjob-input"
+                    placeholder="Описание" minlength="2" maxlength="200" required>
+                <span class="popup__input-error userjob-input-error"></span>
                 <button class="button popup__save-button" type="submit">Сохранить</button>
             </form>
         </div>
@@ -49,33 +53,37 @@
 
 
     <div class="popup add-popup">
+        <div class="popup__overlay"></div>
         <div class="popup__container">
             <button class="popup__close-button button" type="button" aria-label="Закрыть"></button>
             <h2 class="popup__title">
                 Новое место
             </h2>
-            <form class="form">
-                <input class="popup__input" placeholder="Название" name="picturename" type="text">
-                <input class="popup__input" placeholder="Ссылка на картинку" name="picturelink" text="url">
+            <form class="form" novalidate>
+                <input class="popup__input" placeholder="Название" name="picturename" type="text" id="picturename-input"
+                minlength="2" maxlength="30" required>
+                <span class="popup__input-error picturename-input-error"></span>
+                <input class="popup__input" placeholder="Ссылка на картинку" name="picturelink" text="url" type="url" id="url-input" required>
+                <span class="popup__input-error url-input-error"></span>
                 <button class="button popup__save-button" type="submit">Сохранить</button>
             </form>
         </div>
     </div>
 
     <div class="popup image-popup popup_darker">
+        <div class="popup__overlay"></div>
         <div class="popup__image-container">
             <img class="popup__image">
             <button class="popup__close-button button" type="button" aria-label="Закрыть"></button>
             <p class="popup__text"></p>
+            
         </div>
     </div>
 
     <template id="element-list__card-template">
         <div class="element-list__card">
-            <img
-            src="https://images.unsplash.com/photo-1547448415-e9f5b28e570d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
-            class="element-list__image" alt = "Москва"
-            >
+            <img src="https://images.unsplash.com/photo-1547448415-e9f5b28e570d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+                class="element-list__image" alt="Москва">
             <button class="element-list__trash-button button" type="button" aria-label="Удалить"></button>
             <a class="element-list__text no-text-overflow">Москва</a>
             <button class="element-list__like-button button" type="button" aria-label="Понравилось"></button>
