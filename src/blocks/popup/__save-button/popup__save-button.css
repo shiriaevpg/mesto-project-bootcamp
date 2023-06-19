@@ -12,17 +12,18 @@
   line-height: 22px;
   text-align: center;
   color: #FFFFFF;
-  margin-top: 31px;
+  margin-top: 21px;
   border: 0;
   margin-bottom: 35px;
 }
-@media screen and (max-width:  900px) {
-    .popup__save-button {
-        max-width: 238px;
-        font-size: 14px;
-        line-height: 17px;
-        margin-left: 22px;
-        margin-top: 36px;
-        margin-right: 0;
-      }
+
+@media screen and (max-width: 900px) {
+  .popup__save-button {
+    font-size: 14px;
+    line-height: 17px;
+    margin-left: 22px;
+    margin-right: 0;
+    margin-top: 59px;
+    max-width: 238px;
+  }
 }

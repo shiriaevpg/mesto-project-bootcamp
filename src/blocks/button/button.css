@@ -12,4 +12,5 @@
 }
 .button:hover:disabled{
   opacity: 1;
+  cursor: default;
 }
