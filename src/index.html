@@ -15,7 +15,10 @@
     </header>
     <main class="main">
         <section class="profile">
-            <img src="<%=require('./images/avatar.jpg')%>" alt="аватар" class="profile__avatar">
+            <div class="profile__avatar-container">
+                <button class="button profile__avatar-edit"></button>
+                <img src="<%=require('./images/avatar.jpg')%>" alt="аватар" class="profile__avatar">
+            </div>
             <div class="profile__info">
                 <h1 class="profile__name no-text-overflow">Жак-Ив Кусто </h1>
                 <button class="profile__edit-button button" type="button" aria-label="Изменить профиль"></button>
@@ -59,9 +62,10 @@
             </h2>
             <form class="form" novalidate>
                 <input class="popup__input" placeholder="Название" name="picturename" type="text" id="picturename-input"
-                minlength="2" maxlength="30" required>
+                    minlength="2" maxlength="30" required>
                 <span class="popup__input-error picturename-input-error"></span>
-                <input class="popup__input" placeholder="Ссылка на картинку" name="picturelink" text="url" type="url" id="url-input" required>
+                <input class="popup__input" placeholder="Ссылка на картинку" name="picturelink" text="url" type="url"
+                    id="url-input" required>
                 <span class="popup__input-error url-input-error"></span>
                 <button class="button popup__save-button" type="submit">Создать</button>
             </form>
@@ -73,7 +77,20 @@
             <img class="popup__image">
             <button class="popup__close-button button" type="button" aria-label="Закрыть"></button>
             <p class="popup__text"></p>
-            
+
+        </div>
+    </div>
+
+    <div class="popup edit-popup">
+        <div class="popup__container">
+            <h1 class="popup__title">Обновить аватар</h1>
+            <form class="form" novalidate>
+                <input class="popup__input" placeholder="Ссылка на картинку" name="avatalink" text="url" type="url"
+                id="url-input" required>
+                <span class="popup__input-error url-input-error"></span>
+                <button class="popup__close-button button" type="button" aria-label="Закрыть"></button>
+                <button class="button popup__save-button" type="submit">Создать</button>
+            </form>
         </div>
     </div>
 
@@ -83,7 +100,10 @@
                 class="element-list__image" alt="Москва">
             <button class="element-list__trash-button button" type="button" aria-label="Удалить"></button>
             <a class="element-list__text no-text-overflow">Москва</a>
-            <button class="element-list__like-button button" type="button" aria-label="Понравилось"></button>
+            <div class="element-list__card__like-container">
+                <button class="element-list__like-button button" type="button" aria-label="Понравилось"></button>
+                <h3 class="element-list__like-counter">0</h3>
+            </div>
         </div>
     </template>
     <script src="./index.js"></script>

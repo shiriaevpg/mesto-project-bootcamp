@@ -1,0 +1,6 @@
+.element-list__like-counter {
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
+    z-index: -100;
+  }

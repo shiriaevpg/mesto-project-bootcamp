@@ -1,0 +1,15 @@
+.button_hidden {
+    opacity: 0;
+}
+
+.button_hidden:disabled {
+    opacity: 0
+}
+
+.button_hidden:hover {
+    opacity: 0
+}
+
+.button_hidden:hover:disabled {
+    opacity: 0
+}
