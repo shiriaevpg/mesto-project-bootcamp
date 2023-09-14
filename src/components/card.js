@@ -1,5 +1,6 @@
-import {openPopup} from './modal';
-import {askToDelete, selfId,likeCard} from './api'
+import {openPopup} from './modal.js';
+import {askToDelete,likeCard} from './api.js'
+import { selfId } from '../index.js';
 const imagePopup = document.querySelector('.image-popup');
 const cardList = document.querySelector('.element-list');
 const cardTemplate = document.getElementById('element-list__card-template');
@@ -8,14 +9,21 @@ function addCardListeners(card,name,url,addDeleteButton,cardId){
   const newLike = card.querySelector('.element-list__like-button')
   const newDelete = card.querySelector('.element-list__trash-button');
   const cardImage = card.querySelector('.element-list__image');
+
+  const newLikeCounter =  card.querySelector('.element-list__like-counter');
+  const alreadyLiked = newLike.classList.contains('element-list__like-button_liked');
+
   newLike.addEventListener('click',function(){
-    likeCard(cardId,card);
+    likeCard(cardId,alreadyLiked).then(res =>{
+      newLike.classList.toggle('element-list__like-button_liked');
+      newLikeCounter.textContent = res.likes.length;
+    });
     // newLike.classList.toggle('element-list__like-button_liked');
   });
   if (addDeleteButton){
     newDelete.addEventListener('click',function(){
       card.remove();
-      askToDelete(cardId)
+      askToDelete(cardId).catch(err=>{console.log(res)});
     });
   } else {
     newDelete.classList.add("button_hidden");
@@ -23,7 +31,9 @@ function addCardListeners(card,name,url,addDeleteButton,cardId){
   }
   cardImage.addEventListener('click',function(){
     openPopup(imagePopup);
-    imagePopup.querySelector('.popup__image').src = url;
+    const popupImage = imagePopup.querySelector('.popup__image');
+    popupImage.src = url;
+    popupImage.alt = name;
     imagePopup.querySelector('.popup__text').textContent = name;
   });
 }
@@ -36,15 +46,15 @@ export function addCard(newCard){
 export function renderCard(query){
   const newCard =
         cardTemplate.content.querySelector('.element-list__card').cloneNode(true);
-  newCard.querySelector('.element-list__image').src = query.link;
-  newCard.querySelector('.element-list__image').alt = query.name;
+  const newImage = newCard.querySelector('.element-list__image');
+  newImage.src = query.link;
+  newImage.alt = query.name;
   newCard.querySelector('.element-list__text').textContent = query.name;
   newCard.querySelector('.element-list__like-counter').textContent = query.likes.length;
-  const cardLikesCopy = Array.from(JSON.parse(JSON.stringify(query.likes))).map(elem => elem._id);
   if (query.likes.map(elem => elem._id).some(elem => elem === selfId)){
     newCard.querySelector('.element-list__like-button').classList.toggle('element-list__like-button_liked');
   }
-  addCardListeners(newCard,query.name,query.url, query.owner._id === selfId, query._id);
+  addCardListeners(newCard,query.name,query.link, query.owner._id === selfId, query._id);
   return newCard;
 }
 

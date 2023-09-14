@@ -1,9 +1,9 @@
-import '../src/pages/index.css';
-import { enableValidation } from './components/validate';
-import { initialRender,addCard,renderCard } from './components/card';
-import { getProfileInfo, getInitialCards, updateAccount, sendCard, updateAvatar } from './components/api';
-// import  './components/modal';
-import {openPopup,closePopup} from'./components/modal';
+import "../src/pages/index.css";
+import { enableValidation } from "./components/validate.js";
+import { initialRender,addCard,renderCard } from "./components/card.js";
+import { getProfileInfo, getInitialCards, updateAccount, sendCard, updateAvatar} from "./components/api.js";
+// import  "./components/modal";
+import {openPopup,closePopup} from"./components/modal.js";
 const validationSettings = {
   formSelector: '.form',
   inputSelector: '.popup__input',
@@ -34,6 +34,8 @@ const newUrl = formEditElement.querySelector('input[name="avatalink"]')
 const renameSaveButton = profilePopup.querySelector('.popup__save-button');
 const addSaveButton = addPopup.querySelector('.popup__save-button');
 const editSaveButton = editPopup.querySelector('.popup__save-button');
+
+export let selfId;
 editButton.addEventListener('click', function () {
   openPopup(profilePopup);
   nameInput.value = profileName.textContent;
@@ -70,7 +72,11 @@ function handleFormSubmit(evt) {
 function handleAddSubmit(evt) {
   evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
   addSaveButton.textContent = "Сохраняется"
-  sendCard(placeInput.value, linkInput.value).then(()=>{
+  sendCard(placeInput.value, linkInput.value).then(
+    addQuery =>{
+    addCard(renderCard(addQuery));
+    }
+  ).then(()=>{
     placeInput.value = "";
     linkInput.value = "";
     evt.target.reset();
@@ -84,7 +90,9 @@ function handleAddSubmit(evt) {
 function handleEditSubmit(evt){
   evt.preventDefault();
   editSaveButton.textContent="Сохраняется"
-  updateAvatar(newUrl.value).finally(()=>{
+  updateAvatar(newUrl.value).then(() =>{
+    profileAvatar.src = newUrl.value;
+  }).catch(err=>{console.log(err)}).finally(()=>{
     editSaveButton.textContent="Сохранить"
   });
   evt.target.reset();
@@ -94,5 +102,18 @@ formElement.addEventListener('submit', handleFormSubmit);
 formAddElement.addEventListener('submit', handleAddSubmit);
 formEditElement.addEventListener('submit', handleEditSubmit)
 enableValidation(validationSettings);
-getProfileInfo();
-getInitialCards();
+
+getProfileInfo().then(res => {
+  profileAvatar.src = res.avatar;
+  profileName.textContent = res.name;
+  profileJob.textContent = res.about;
+  selfId = res._id;
+}).catch(err=>{
+  console.log("An error has occured",err)
+});
+
+getInitialCards().then((result) => {
+  initialRender(result);
+}).catch(err=>{
+  console.log(err)
+});
