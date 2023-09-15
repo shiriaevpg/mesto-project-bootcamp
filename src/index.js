@@ -1,119 +1,102 @@
 import "../src/pages/index.css";
 import { enableValidation } from "./components/validate.js";
-import { initialRender,addCard,renderCard } from "./components/card.js";
+import { doInitialRender,addCard,renderCard } from "./components/card.js";
 import { getProfileInfo, getInitialCards, updateAccount, sendCard, updateAvatar} from "./components/api.js";
 // import  "./components/modal";
 import {openPopup,closePopup} from"./components/modal.js";
-const validationSettings = {
-  formSelector: '.form',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__save-button',
-  inputErrorClass: 'popup__input_error',
-  errorClass: 'popup__input-error_visible'
-};
-const editButton = document.querySelector('.profile__edit-button');
-const addButton = document.querySelector('.profile__add-button');
-const closeButtons = document.querySelectorAll('.popup__close-button');
-const profilePopup = document.querySelector('.rename-popup');
-const addPopup = document.querySelector('.add-popup');
-export const formElement = profilePopup.querySelector('.form');
-const formAddElement = addPopup.querySelector('.form');
-const nameInput = formElement.querySelector('input[name="username"]');
-const jobInput = formElement.querySelector('input[name="userjob"]');
-const placeInput = formAddElement.querySelector('input[name="picturename"]');
-const linkInput = formAddElement.querySelector('input[name="picturelink"]');
-export const profileName = document.querySelector('.profile__name');
-export const profileJob = document.querySelector('.profile__quote');
-
-const editPopup = document.querySelector('.edit-popup')
-const editAvatarButton = document.querySelector('.profile__avatar-edit');
-const formEditElement = editPopup.querySelector('.form')
-export const profileAvatar = document.querySelector('.profile__avatar')
-const newUrl = formEditElement.querySelector('input[name="avatalink"]')
-
-const renameSaveButton = profilePopup.querySelector('.popup__save-button');
-const addSaveButton = addPopup.querySelector('.popup__save-button');
-const editSaveButton = editPopup.querySelector('.popup__save-button');
-
+import * as constants from "./components/constants";
 export let selfId;
-editButton.addEventListener('click', function () {
-  openPopup(profilePopup);
-  nameInput.value = profileName.textContent;
-  jobInput.value = profileJob.textContent;
+constants.editButton.addEventListener('click', function () {
+  openPopup(constants.profilePopup);
+  constants.nameInput.value = constants.profileName.textContent;
+  constants.jobInput.value = constants.profileJob.textContent;
 });
 
-addButton.addEventListener('click', function () {
-  openPopup(addPopup);
+constants.addButton.addEventListener('click', function () {
+  openPopup(constants.addPopup);
 });
 
-editAvatarButton.addEventListener('click',function(){
-  openPopup(editPopup);
+constants.editAvatarButton.addEventListener('click',function(){
+  openPopup(constants.avatarPopup);
 });
 
-closeButtons.forEach((button) => {
+constants.closeButtons.forEach((button) => {
   const popup = button.closest('.popup');
   button.addEventListener('click', () => closePopup(popup));
 });
 
-function handleFormSubmit(evt) {
+function handleProfileFormSubmit(evt) {
   evt.preventDefault();
-  profileName.textContent = nameInput.value;
-  profileJob.textContent = jobInput.value;
-  renameSaveButton.textContent = "Сохраняется";
-  updateAccount(nameInput.value,jobInput.value)
+  constants.profileName.textContent = constants.nameInput.value;
+  constants.profileJob.textContent = constants.jobInput.value;
+  constants.renameSaveButton.textContent = "Сохраняется";
+  updateAccount(constants.nameInput.value,constants.jobInput.value).then(() =>{
+    evt.target.reset();
+    closePopup(constants.profilePopup);
+  })
     .catch(err=>{console.log(err)})
     .finally(()=>{
-    renameSaveButton.textContent = "Сохранить";
+    constants.renameSaveButton.textContent = "Сохранить";
     });
-  evt.target.reset();
-  closePopup(profilePopup);
 }
 
 function handleAddSubmit(evt) {
   evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
-  addSaveButton.textContent = "Сохраняется"
-  sendCard(placeInput.value, linkInput.value).then(
+  constants.addSaveButton.textContent = "Сохраняется"
+  sendCard(constants.placeInput.value, constants.linkInput.value).then(
     addQuery =>{
     addCard(renderCard(addQuery));
-    }
-  ).then(()=>{
-    placeInput.value = "";
-    linkInput.value = "";
     evt.target.reset();
-    addPopup.querySelector('.popup__save-button').setAttribute("disabled", "disabled");
-    closePopup(addPopup);
-  }).catch(err=>{console.log(err)}).finally(()=>{
-    addSaveButton.textContent = "Создать"
+    constants.addPopupSaveButton.setAttribute("disabled", "disabled");
+    closePopup(constants.addPopup);
+    }
+  ).catch(err=>{console.log(err)}).finally(()=>{
+    constants.addSaveButton.textContent = "Создать"
   }
   );
 }
-function handleEditSubmit(evt){
+function handleAvatarFormSubmit(evt){
   evt.preventDefault();
-  editSaveButton.textContent="Сохраняется"
-  updateAvatar(newUrl.value).then(() =>{
-    profileAvatar.src = newUrl.value;
+  constants.editSaveButton.textContent="Сохраняется"
+  updateAvatar(constants.newUrl.value).then(() =>{
+    constants.profileAvatar.src = constants.newUrl.value;
+    closePopup(constants.avatarPopup);
+    evt.target.reset();
   }).catch(err=>{console.log(err)}).finally(()=>{
-    editSaveButton.textContent="Сохранить"
-  });
-  evt.target.reset();
-  closePopup(editPopup);
+    constants.editSaveButton.textContent="Сохранить"
+  })
 }
-formElement.addEventListener('submit', handleFormSubmit);
-formAddElement.addEventListener('submit', handleAddSubmit);
-formEditElement.addEventListener('submit', handleEditSubmit)
-enableValidation(validationSettings);
+constants.profileForm.addEventListener('submit', handleProfileFormSubmit);
+constants.formAddElement.addEventListener('submit', handleAddSubmit);
+constants.avatarForm.addEventListener('submit', handleAvatarFormSubmit)
+enableValidation(constants.validationSettings);
 
-getProfileInfo().then(res => {
-  profileAvatar.src = res.avatar;
-  profileName.textContent = res.name;
-  profileJob.textContent = res.about;
-  selfId = res._id;
-}).catch(err=>{
-  console.log("An error has occured",err)
-});
+// getProfileInfo().then(res => {
+//   constants.profileAvatar.src = res.avatar;
+//   constants.profileName.textContent = res.name;
+//   constants.profileJob.textContent = res.about;
+//   selfId = res._id;
+// }).catch(err=>{
+//   console.log("An error has occured",err)
+// });
 
-getInitialCards().then((result) => {
-  initialRender(result);
-}).catch(err=>{
-  console.log(err)
-});
+// getInitialCards().then((result) => {
+//   doInitialRender(result);
+// }).catch(err=>{
+//   console.log(err)
+// });
+
+Promise.all([getProfileInfo(), getInitialCards()])
+  .then(([userData, cards]) => {
+      // тут установка данных пользователя
+      constants.profileAvatar.src = userData.avatar;
+      constants.profileName.textContent = userData.name;
+      constants.profileJob.textContent = userData.about;
+      selfId = userData._id;
+      // и тут отрисовка карточек
+      doInitialRender(cards);
+  })
+  .catch(err => {
+    console.log(err);
+  });
+ 

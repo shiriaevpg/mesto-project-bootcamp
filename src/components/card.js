@@ -1,40 +1,38 @@
 import {openPopup} from './modal.js';
 import {askToDelete,likeCard} from './api.js'
 import { selfId } from '../index.js';
-const imagePopup = document.querySelector('.image-popup');
-const cardList = document.querySelector('.element-list');
-const cardTemplate = document.getElementById('element-list__card-template');
-
+import { imagePopup, popupImage, popupImageText, cardList, cardTemplate } from './imagePopup.js';
 function addCardListeners(card,name,url,addDeleteButton,cardId){
   const newLike = card.querySelector('.element-list__like-button')
   const newDelete = card.querySelector('.element-list__trash-button');
   const cardImage = card.querySelector('.element-list__image');
 
   const newLikeCounter =  card.querySelector('.element-list__like-counter');
-  const alreadyLiked = newLike.classList.contains('element-list__like-button_liked');
-
+  
   newLike.addEventListener('click',function(){
+    const alreadyLiked = newLike.classList.contains('element-list__like-button_liked');
     likeCard(cardId,alreadyLiked).then(res =>{
       newLike.classList.toggle('element-list__like-button_liked');
       newLikeCounter.textContent = res.likes.length;
+    }).catch(err=>{
+      console.log(err)
     });
-    // newLike.classList.toggle('element-list__like-button_liked');
   });
   if (addDeleteButton){
     newDelete.addEventListener('click',function(){
-      card.remove();
-      askToDelete(cardId).catch(err=>{console.log(res)});
-    });
+      askToDelete(cardId).then(()=>{
+        card.remove();
+      });
+    }).catch(err=>{console.log(err)});
   } else {
     newDelete.classList.add("button_hidden");
     newDelete.disabled = true;
   }
   cardImage.addEventListener('click',function(){
     openPopup(imagePopup);
-    const popupImage = imagePopup.querySelector('.popup__image');
     popupImage.src = url;
     popupImage.alt = name;
-    imagePopup.querySelector('.popup__text').textContent = name;
+    popupImageText.textContent = name;
   });
 }
 
@@ -58,11 +56,10 @@ export function renderCard(query){
   return newCard;
 }
 
-export function initialRender(initialCards){
+export function doInitialRender(initialCards){
   console.log("inrend");
-  Array.from(initialCards).forEach(curelem => {
-    // console.log("DEBUG: ",  curelem.name,curelem.link);
-    addCard(renderCard(curelem));
+  Array.from(initialCards).forEach(card => {
+    addCard(renderCard(card));
   });
   
 }

@@ -18,7 +18,6 @@ function closeByEsc(evt) {
 }
 function closeByOverlay(evt) {
   if (evt.target.classList.contains('popup')) {
-    const popup = document.querySelector('.popup_opened');
-    closePopup(popup);
+    closePopup(evt.target);
   }
 }
