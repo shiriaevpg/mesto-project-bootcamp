@@ -47,7 +47,7 @@ function handleAddSubmit(evt) {
     addQuery =>{
     addCard(renderCard(addQuery));
     evt.target.reset();
-    constants.addPopupSaveButton.setAttribute("disabled", "disabled");
+    constants.addSaveButton.setAttribute("disabled", "disabled");
     closePopup(constants.addPopup);
     }
   ).catch(err=>{console.log(err)}).finally(()=>{

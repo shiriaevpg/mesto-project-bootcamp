@@ -6,7 +6,6 @@ function addCardListeners(card,name,url,addDeleteButton,cardId){
   const newLike = card.querySelector('.element-list__like-button')
   const newDelete = card.querySelector('.element-list__trash-button');
   const cardImage = card.querySelector('.element-list__image');
-
   const newLikeCounter =  card.querySelector('.element-list__like-counter');
   
   newLike.addEventListener('click',function(){
@@ -23,7 +22,7 @@ function addCardListeners(card,name,url,addDeleteButton,cardId){
       askToDelete(cardId).then(()=>{
         card.remove();
       });
-    }).catch(err=>{console.log(err)});
+    });
   } else {
     newDelete.classList.add("button_hidden");
     newDelete.disabled = true;
